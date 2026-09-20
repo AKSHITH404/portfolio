@@ -1,0 +1,468 @@
+/* ============================================
+   Tokens
+   ============================================ */
+:root {
+  --bg: #16130f;
+  --bg-panel: #1d1811;
+  --line: #3a3226;
+  --text: #ede8de;
+  --text-muted: #a89d88;
+  --accent: #d4a24c;
+  --accent-soft: rgba(212, 162, 76, 0.14);
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --maxw: 1080px;
+  --gutter: clamp(24px, 6vw, 72px);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+}
+
+p { margin: 0 0 1em 0; }
+p:last-child { margin-bottom: 0; }
+
+::selection { background: var(--accent-soft); color: var(--text); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* thin rhythm strip pinned to the very top of the page */
+.beatline {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--accent) 0px, var(--accent) 2px,
+    transparent 2px, transparent 10px
+  );
+  opacity: 0.55;
+  z-index: 100;
+}
+
+/* ============================================
+   Header / Nav
+   ============================================ */
+.site-header {
+  position: fixed;
+  top: 3px; left: 0; right: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px var(--gutter);
+  background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.nav-list {
+  display: flex;
+  gap: clamp(16px, 3vw, 32px);
+  list-style: none;
+  margin: 0; padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.nav-list a {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+  position: relative;
+}
+.nav-list a:hover,
+.nav-list a:focus-visible { color: var(--text); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px; height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--gutter);
+  position: relative;
+}
+
+.hero-inner { max-width: var(--maxw); }
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1.5em;
+}
+
+.hero-name {
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+  margin-top: 0.9em;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--text-muted);
+  min-height: 1.6em;
+}
+
+.cursor {
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 40px;
+  margin-top: 1.8em;
+}
+.waveform span {
+  display: block;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 1px;
+  opacity: 0.75;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.hero-links {
+  display: flex;
+  gap: 28px;
+  margin-top: 2.2em;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.hero-links a {
+  color: var(--text);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.hero-links a:hover,
+.hero-links a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: var(--gutter);
+  width: 1px;
+  height: 48px;
+  background: var(--line);
+}
+.scroll-cue span {
+  position: absolute;
+  top: 0; left: -3px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: travel 1.8s ease-in-out infinite;
+}
+@keyframes travel {
+  0% { top: 0; opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ============================================
+   Sections (shared)
+   ============================================ */
+.section {
+  padding: clamp(64px, 12vw, 120px) var(--gutter);
+  border-top: 1px solid var(--line);
+}
+
+.section-grid {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: clamp(32px, 6vw, 64px);
+}
+
+.section-head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.tick-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+}
+.tick-row span {
+  width: 14px;
+  height: 2px;
+  background: var(--line);
+}
+.tick-row span:first-child { background: var(--accent); }
+
+@media (max-width: 720px) {
+  .section-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ============================================
+   About
+   ============================================ */
+.about-body p { max-width: 640px; color: var(--text); }
+.about-body p:first-child { color: var(--text); }
+
+/* ============================================
+   Skills
+   ============================================ */
+.skills-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+.skill-group h3 {
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+.tag-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 320px;
+}
+.tag-list li {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 3px;
+  color: var(--text);
+}
+.tag-list.small li {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+}
+
+.plain-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.plain-list li {
+  padding-left: 18px;
+  position: relative;
+}
+.plain-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.6em;
+  width: 8px; height: 1px;
+  background: var(--accent);
+}
+
+/* ============================================
+   Education timeline
+   ============================================ */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+  border-left: 1px solid var(--line);
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 40px;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-mark {
+  position: absolute;
+  left: -33px;
+  top: 6px;
+  width: 9px; height: 9px;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+
+.timeline-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.5em;
+}
+
+.timeline-content h3 { font-size: 1.15rem; margin-bottom: 0.3em; }
+.timeline-content p:last-child { color: var(--text-muted); max-width: 560px; }
+
+/* ============================================
+   Cards (experience + projects)
+   ============================================ */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+@media (max-width: 640px) {
+  .card-row { grid-template-columns: 1fr; }
+}
+
+.card {
+  border: 1px solid var(--line);
+  padding: 28px;
+  border-radius: 4px;
+  background: var(--bg-panel);
+}
+
+.card-date {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin-bottom: 0.8em;
+}
+
+.card h3 { font-size: 1.2rem; margin-bottom: 0.3em; }
+.card-org { color: var(--text-muted); margin-bottom: 0.8em; }
+
+.project-card p { color: var(--text-muted); }
+
+/* ============================================
+   Activities
+   ============================================ */
+.activities-body p {
+  max-width: 640px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Contact
+   ============================================ */
+.contact-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.contact-link {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  display: inline-block;
+  width: fit-content;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.contact-link:hover,
+.contact-link:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px var(--gutter) 48px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.back-to-top:hover,
+.back-to-top:focus-visible { color: var(--accent); }
+
+/* ============================================
+   Mobile nav
+   ============================================ */
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+
+  .nav-list {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    width: 220px;
+    background: var(--bg-panel);
+    border-left: 1px solid var(--line);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 32px;
+    gap: 24px;
+    font-size: 1rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  .nav-list.open { transform: translateX(0); }
+}
