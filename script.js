@@ -1,77 +1,52 @@
-// ============================================
-// Typing effect for hero tagline
-// ============================================
-const roles = [
+var roles = [
   "MCA student.",
-  "Building with Python, HTML, CSS & JS.",
+  "Building with Java, Python, HTML, CSS & JS.",
   "Percussionist & instructor."
 ];
 
-const typingEl = document.getElementById("typingText");
-let roleIndex = 0;
-let charIndex = 0;
-let deleting = false;
+var roleIndex = 0;   
+var charIndex = 0;    
+var deleting = false; 
 
-function typeLoop() {
-  if (!typingEl) return;
+var typingEl = document.getElementById("typingText");
 
-  const current = roles[roleIndex];
+function updateText() {
+  var currentPhrase = roles[roleIndex];
 
-  if (!deleting) {
-    charIndex++;
-    typingEl.textContent = current.slice(0, charIndex);
-    if (charIndex === current.length) {
+  if (deleting == false) {
+    charIndex = charIndex + 1;
+    typingEl.textContent = currentPhrase.substring(0, charIndex);
+
+    if (charIndex == currentPhrase.length) {
       deleting = true;
-      setTimeout(typeLoop, 1400);
-      return;
     }
   } else {
-    charIndex--;
-    typingEl.textContent = current.slice(0, charIndex);
-    if (charIndex === 0) {
+    charIndex = charIndex - 1;
+    typingEl.textContent = currentPhrase.substring(0, charIndex);
+
+    if (charIndex == 0) {
       deleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
+      roleIndex = roleIndex + 1;
+      if (roleIndex == roles.length) {
+        roleIndex = 0;
+      }
     }
   }
-
-  const speed = deleting ? 30 : 55;
-  setTimeout(typeLoop, speed);
 }
 
-typeLoop();
+setInterval(updateText, 100);
 
-// ============================================
-// Waveform bars (decorative, tied to percussion theme)
-// ============================================
-const waveform = document.getElementById("waveform");
-if (waveform) {
-  const barCount = 24;
-  for (let i = 0; i < barCount; i++) {
-    const bar = document.createElement("span");
-    const height = 12 + Math.random() * 28;
-    const delay = (Math.random() * 1.2).toFixed(2);
-    bar.style.height = `${height}px`;
-    bar.style.animationDelay = `${delay}s`;
-    waveform.appendChild(bar);
-  }
-}
 
-// ============================================
-// Mobile nav toggle
-// ============================================
-const navToggle = document.getElementById("navToggle");
-const navList = document.getElementById("navList");
+var navToggle = document.getElementById("navToggle");
+var navList = document.getElementById("navList");
 
-if (navToggle && navList) {
-  navToggle.addEventListener("click", () => {
-    const isOpen = navList.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
+navToggle.onclick = function () {
+  navList.classList.toggle("open");
+};
 
-  navList.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navList.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
-  });
+var navLinks = navList.getElementsByTagName("a");
+for (var i = 0; i < navLinks.length; i++) {
+  navLinks[i].onclick = function () {
+    navList.classList.remove("open");
+  };
 }
