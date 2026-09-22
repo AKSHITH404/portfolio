@@ -76,6 +76,11 @@ p:last-child { margin-bottom: 0; }
   padding: 20px var(--gutter);
   background: linear-gradient(to bottom, var(--bg) 60%, transparent);
 }
+img{
+  width:300px;
+  height:300px;
+  object-fit: cover;
+}
 
 .logo {
   font-family: var(--font-mono);
