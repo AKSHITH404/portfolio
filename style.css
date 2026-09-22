@@ -77,8 +77,8 @@ p:last-child { margin-bottom: 0; }
   background: linear-gradient(to bottom, var(--bg) 60%, transparent);
 }
 img{
-  width:30px;
-  height:30px;
+  width:3px;
+  height:3px;
   object-fit: cover;
 }
 
